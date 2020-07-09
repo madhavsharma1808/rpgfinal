@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.G))
         {
             isdirect = !isdirect;
+            currentClickTarget = transform.position;
         }    
         if(isdirect)
             keyboardmovement();

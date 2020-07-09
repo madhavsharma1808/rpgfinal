@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 
 public class CameraRaycaster : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class CameraRaycaster : MonoBehaviour
 
     float distanceToBackground = 100f;
     Camera viewCamera;
+
+    public delegate void onlayerchange(Layer newlayer);
+    public onlayerchange layerchangeobservor;
 
     RaycastHit m_hit;
     public RaycastHit hit
@@ -25,6 +29,7 @@ public class CameraRaycaster : MonoBehaviour
     void Start() // TODO Awake?
     {
         viewCamera = Camera.main;
+        
     }
 
     void Update()
@@ -36,7 +41,12 @@ public class CameraRaycaster : MonoBehaviour
             if (hit.HasValue)
             {
                 m_hit = hit.Value;
-                m_layerHit = layer;
+
+                if (m_layerHit != layer)
+                {
+                    m_layerHit = layer;
+                    layerchangeobservor(m_layerHit);
+                }
                 return;
             }
         }

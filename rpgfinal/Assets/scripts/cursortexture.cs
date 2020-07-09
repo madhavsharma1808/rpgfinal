@@ -15,24 +15,27 @@ public class cursortexture : MonoBehaviour
     void Start()
     {
         cameraRaycaster = GetComponent<CameraRaycaster>();
+        cameraRaycaster.layerchangeobservor += ondeleatecall;
     }
-
+    
     // Update is called once per frame
-    void Update()
+    void ondeleatecall(Layer newlayer)
     {
-        switch(cameraRaycaster.layerHit)
+        print("hello2");
+        switch(newlayer)
         {
             case Layer.Walkable:
                 Cursor.SetCursor(walkcursor, cursorhotspot, CursorMode.Auto);
                 break;
             case Layer.Enemy:
                 Cursor.SetCursor(enemycursor, cursorhotspot, CursorMode.Auto);
+                
                 break;
             case Layer.RaycastEndStop:
                 Cursor.SetCursor(unknowncursor, cursorhotspot, CursorMode.Auto);
                 break;
         }
-        Cursor.SetCursor(walkcursor, cursorhotspot, CursorMode.Auto);
+        
     }
        
 }
